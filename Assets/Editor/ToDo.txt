@@ -1,0 +1,28 @@
+IDEA: time power up
+
+TODO: LEVEL
+TODO: KITS
+TODO: Die nächste wave soll erst starten, wenn alle die welt generiert haben / Der Marster Client soll die welt machen und dann
+      sollen den anderen spielern diese map zugeschickt bekommen.
+
+LATER: Wenn Zombie zu Tief fällt, ihn zerstören
+LATER: BuildMat added Text wenn man Destruible zerstört
+LATER: Der Marster Client soll die map in eine liste generaten und dann weiterschicken
+LATER: Destroy Particel bei Buildings
+LATER: Zombie Dead Particle
+LATER: PowerUp übern kopf syncen
+LATER: Player Ammo auf rücken sysncen wenn jemand neues reinjoint für den dann so
+LATER: Dummy Puppe
+
+CHANGE: Schießen soll leichter gehen, also den trigger weniger nach unten (bei bauen evlt. auch)
+CHANGE: Zomibe rb vel soll begrenzt sein (damit sie nicht so komisch sliden)
+
+FIX: Zombie sollen nicht mit der map border colliden
+FIX: Bei der world gen sollen keine sachen im player spawnen
+FIX: Man kann schießen während man einen baum abbaut
+FIX: Zombie leben lassen meta fixen
+
+BUG: Bei höheren Speed braucht mehr mehr Ammo beim Turret und andersrum
+BUG: freeze double bar
+BUG: turret out of ammo sound bei allen abspielen
+BUG: Erster Axt Hit gibt ne Fehlermeldung
