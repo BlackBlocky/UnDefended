@@ -36,7 +36,6 @@ public class BombPwUpScript : MonoBehaviour
 
     public void DoExplosion()
     {
-
         isActive = true;
 
         // Effects
@@ -70,6 +69,10 @@ public class BombPwUpScript : MonoBehaviour
             if (coll.tag == "Zombie")
             {
                 ZombieManager.Instance.AddDamageToZombie(coll.GetComponent<ZombieHealth>().id, 1000000);
+            }
+            else if (coll.CompareTag("Boss"))
+            {
+                BossManager.Instance.AddDamageToBoss(coll.GetComponent<ZombieHealth>().id, 1500, coll.GetComponent<ZombieHealth>().bossDeadAction);
             }
         }        
     }

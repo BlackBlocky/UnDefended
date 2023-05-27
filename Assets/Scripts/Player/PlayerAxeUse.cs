@@ -95,18 +95,10 @@ public class PlayerAxeUse : MonoBehaviour
 
         // Add Damge or Destroy Destructible
         string result = go.GetComponent<DestructibleScript>().AddDamage(10);
-        if (result == "Dead")
-        {
-            // DeParent Dead GameObject
-            go.GetComponent<DestructibleScript>().deadGo.transform.parent = go.transform.parent;
-            go.GetComponent<DestructibleScript>().deadGo.SetActive(true);
 
-            // DeParant SoundPlayer and Play
-            go.GetComponent<DestructibleScript>().damageSound.gameObject.transform.parent = go.transform.parent;
-            go.GetComponent<DestructibleScript>().damageSound.PlaySingleAndDestroy();
-        }
         if (!photonView.IsMine) return; // If not host of the RPC, stop at this point
 
+        // Do this only at the Client, that destroyed the Destructible
         if(result == "Alive") return;
         else if(result == "Dead")
         {            

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3035148217896795124}
   - component: {fileID: 3035148217896795130}
   - component: {fileID: 3035148217896795131}
+  - component: {fileID: 4576988846341408353}
   - component: {fileID: 6876756090596344265}
   m_Layer: 7
   m_Name: HeadBoss
@@ -93,8 +94,26 @@ MonoBehaviour:
   isBoss: 1
   bossDeadAction: 1
   health: 2000
+  isDead: 0
   damageable: 1
   damageSound: {fileID: 3035148219267942970}
+--- !u!114 &4576988846341408353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035148217896795127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e5a4926fcd05544be272539d676593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destructibleDestroyRange: 2.3
+  destructibleDestroyRangeOffset: {x: 0, y: 2.23, z: 0}
+  destructibleLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!65 &6876756090596344265
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -254,6 +273,7 @@ MonoBehaviour:
   source: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 75e6ae811a1cb1241aba89fe6519fe8f, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!1 &3035148219267942965
@@ -402,6 +422,7 @@ MonoBehaviour:
   source: {fileID: 3035148219267942971}
   clips:
   - {fileID: 8300000, guid: ebcfd6be6b79b784995b8bf79f1b53f7, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!1001 &3035148217806851970

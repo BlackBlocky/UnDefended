@@ -157,10 +157,10 @@ RectTransform:
   m_Father: {fileID: 1692319710}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 106.1}
+  m_SizeDelta: {x: 0, y: 106.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &322429
 Animator:
@@ -774,6 +774,7 @@ MonoBehaviour:
   source: {fileID: 18080961}
   clips:
   - {fileID: 8300000, guid: d0f79d7f5129ccd42945231ea8f755bd, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &18080961
@@ -1303,6 +1304,7 @@ MonoBehaviour:
   source: {fileID: 66803352}
   clips:
   - {fileID: 8300000, guid: 4c75321ce6401384f8c9f8b3fd88ce9a, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &66803352
@@ -1646,6 +1648,7 @@ MonoBehaviour:
   source: {fileID: 153879077}
   clips:
   - {fileID: 8300000, guid: 3ab9fad59f7fed4478e835faf34577f9, type: 3}
+  soundPitch: 1
   SoundType: music
   canPlay: 1
 --- !u!1 &154957996
@@ -12038,6 +12041,7 @@ MonoBehaviour:
   source: {fileID: 267197169}
   clips:
   - {fileID: 8300000, guid: f5ea2b1c1935eb84c87311c82b77997e, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &267197169
@@ -13362,6 +13366,7 @@ MonoBehaviour:
   source: {fileID: 410951416}
   clips:
   - {fileID: 8300000, guid: d2ce03c1d0adf8a4f926eadfb4e24d8a, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &410951416
@@ -14201,6 +14206,7 @@ MonoBehaviour:
   source: {fileID: 581341401}
   clips:
   - {fileID: 8300000, guid: 7e200107e5bafcf4a8d8d898092ae12d, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &581341401
@@ -20735,6 +20741,7 @@ MonoBehaviour:
   source: {fileID: 817134373}
   clips:
   - {fileID: 8300000, guid: a35436d410e194c4d95cc8403503d3b0, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &817134373
@@ -21236,6 +21243,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 17deacfc0ff42dc4383bc387d0cbccc2, type: 3}
   - {fileID: 8300000, guid: f130040c75e5fa543b1413dac4d8963b, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &887000731
@@ -21804,6 +21812,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 978991887}
+  - {fileID: 978991890}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -29815,6 +29824,7 @@ MonoBehaviour:
   source: {fileID: 1596111369}
   clips:
   - {fileID: 8300000, guid: 53e0c49d21582c5449389850426a502f, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &1596111369
@@ -31049,6 +31059,7 @@ MonoBehaviour:
   source: {fileID: 1837247450}
   clips:
   - {fileID: 8300000, guid: 8b3fc37bff091864481e24f70c6b7aa0, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &1837247450
@@ -31380,6 +31391,7 @@ MonoBehaviour:
   source: {fileID: 1887998029}
   clips:
   - {fileID: 8300000, guid: 65e8b3cab38b2a545b772d30e616c3ec, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &1887998029
@@ -37031,6 +37043,7 @@ MonoBehaviour:
   source: {fileID: 1999364341}
   clips:
   - {fileID: 8300000, guid: 15d9259e3911d594786b97c593fae34b, type: 3}
+  soundPitch: 1
   SoundType: sound
   canPlay: 1
 --- !u!82 &1999364341

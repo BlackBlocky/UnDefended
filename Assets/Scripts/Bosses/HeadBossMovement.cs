@@ -29,17 +29,19 @@ public class HeadBossMovement : MonoBehaviour
     // Locals
     Transform activeTarget;
     Rigidbody rb;
+    PowerUpManager powerUpManager;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        powerUpManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<PowerUpManager>();
     }
 
     private void FixedUpdate()
     {
         if(activeTarget == null) FindNewTarget();
 
-        if(state != State.Idle) FixedMovementUpdate();
+        if(state != State.Idle && !powerUpManager.isFreeze) FixedMovementUpdate();
     }
 
     private void Update()

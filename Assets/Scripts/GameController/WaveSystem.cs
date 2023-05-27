@@ -106,10 +106,20 @@ public class WaveSystem : MonoBehaviourPunCallbacks
                 // Check if All Zombies Dead, if it is, start next wave
                 if (generateDone && canSpawn && zombieRemain <= 0)
                 {
+                    // Check if all Zombies are Dead and Check if all Bosses are Dead
                     GameObject[] allZombies = GameObject.FindGameObjectsWithTag("Zombie");
-                    if (allZombies.Length == 0)
+                    GameObject[] allBosses = GameObject.FindGameObjectsWithTag("Boss");
+                    if (allZombies.Length == 0 && allBosses.Length == 0)
                     {
-                        StartNewWave();
+                        // Safety Check again after 1 sec
+                        yield return new WaitForSecondsRealtime(1f);
+
+                        allZombies = GameObject.FindGameObjectsWithTag("Zombie");
+                        allBosses = GameObject.FindGameObjectsWithTag("Boss");
+                        if (allZombies.Length == 0 && allBosses.Length == 0)
+                        {
+                            StartNewWave();
+                        }                           
                     }
                 }
             }

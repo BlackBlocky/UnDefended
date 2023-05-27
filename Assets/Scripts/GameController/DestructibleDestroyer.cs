@@ -23,19 +23,24 @@ public class DestructibleDestroyer : MonoBehaviour
     [PunRPC]
     void DestroyDestructibleRPC(int id)
     {
-        // Get Bullet with id
-        try
+        //Get Bullet with id
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Destructible");
+        foreach (GameObject item in bullets)
         {
-            GameObject[] bullets = GameObject.FindGameObjectsWithTag("Destructible");
-            foreach (GameObject item in bullets)
+            if (item.GetComponent<DestructibleScript>().Id == id)
             {
-                if (item.GetComponent<DestructibleScript>().Id == id)
-                {
-                    Destroy(item);
-                    return;
-                }
+                // DeParent Dead GameObject
+                item.GetComponent<DestructibleScript>().deadGo.transform.parent = item.transform.parent;
+                item.GetComponent<DestructibleScript>().deadGo.SetActive(true);
+
+                // DeParant SoundPlayer and Play
+                item.GetComponent<DestructibleScript>().damageSound.gameObject.transform.parent = item.transform.parent;
+                item.GetComponent<DestructibleScript>().damageSound.PlaySingleAndDestroy();
+
+                Destroy(item);
+                return;
             }
         }
-        catch { }
     }
 }
+
