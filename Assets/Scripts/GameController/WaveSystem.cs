@@ -2,10 +2,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class WaveSystem : MonoBehaviourPunCallbacks
 {
@@ -17,6 +15,7 @@ public class WaveSystem : MonoBehaviourPunCallbacks
     public TextMeshProUGUI waveTxt;
 
     public string[] zombieNames;
+    public string[] bossNames;
 
     public string[] grassLandscape;
     [Tooltip("" +
@@ -34,10 +33,12 @@ public class WaveSystem : MonoBehaviourPunCallbacks
     public float[] grassSettings;
 
     public int wave = 0;
+    public int minWaveToBoss = 5, maxWaveToBoss = 8, wavesSinceLastBoss = 0;
 
     public float zombieSpawnSpeed = 2f;
     public int zombieRemainTotal = 20;
     public int zombieRemain = 0;
+    public int bossToSpawn = -1;
     public bool canSpawn = true;
 
     bool generateDone = false;
@@ -71,12 +72,23 @@ public class WaveSystem : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient && Input.GetKeyDown(KeyCode.O))
         {
-            Start();
+            GameObject[] allZombies = GameObject.FindGameObjectsWithTag("Zombie");
+            GameObject[] allBosses = GameObject.FindGameObjectsWithTag("Boss");
+            foreach (GameObject item in allZombies)
+            {
+                ZombieManager.Instance.DestroyZombie(item.GetComponent<ZombieHealth>().id);
+            }
+            foreach (GameObject item in allBosses)
+            {
+                BossManager.Instance.DestroyBoss(item.GetComponent<ZombieHealth>().id, 0);
+            }
+
+            StartNewWave();
         }
 
         // Zombie Spawn
         spawnCooldown -= Time.deltaTime;
-        if (spawnCooldown <= 0 && canSpawn && generateDone && zombieRemain > 0)
+        if (spawnCooldown <= 0 && canSpawn && generateDone && zombieRemain > 0) // Spawn normal Zombie
         {
             spawnCooldown = zombieSpawnSpeed; // Zombie Spawn Speed = Wave Time / Total Zombies
             zombieRemain -= 1;
@@ -94,6 +106,21 @@ public class WaveSystem : MonoBehaviourPunCallbacks
                 ZombieManager.Instance.SpawnZombie(zombieNames[Random.Range(0, zombieNames.Length)],
                     spawnPos.x, spawnPos.y, spawnPos.z, Random.Range(-2147483648, 2147483647));
             }
+        }
+        else if (canSpawn && generateDone && bossToSpawn > -1) // Spawn Boss
+        {
+            if(PhotonNetwork.IsMasterClient)
+            {
+                // Find Spawns
+                GameObject[] spawns = GameObject.FindGameObjectsWithTag("ZombieSpawn");
+
+                // Spawn Boss
+                var spawnPos = spawns[Random.Range(0, spawns.Length)].transform.position;
+                BossManager.Instance.SpawnBoss(bossNames[bossToSpawn], spawnPos, Random.Range(-2147483648, 2147483647));
+            }
+
+            bossToSpawn = -1;
+            wavesSinceLastBoss = 0;
         }
     }
 
@@ -130,12 +157,23 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
     void StartNewWave()
     {
+        // Choose Normal Wave or Boss Wave
+        bool startBossWave = false;
+        if (wavesSinceLastBoss == maxWaveToBoss) startBossWave = true;
+        else if (wavesSinceLastBoss >= minWaveToBoss)
+        {
+            int randomNum = Random.Range(wavesSinceLastBoss, maxWaveToBoss + 1);
+            if(randomNum == maxWaveToBoss) startBossWave = true;
+        }
+
         // Start New Wave
-        myPhotonView.RPC("StartNewWaveRPC", RpcTarget.All, (int)System.DateTime.Now.Ticks, wave, "Grass");
+        int bossWaveId = -1;
+        if(startBossWave) bossWaveId = Random.Range(0, bossNames.Length);
+        myPhotonView.RPC("StartNewWaveRPC", RpcTarget.All, (int)System.DateTime.Now.Ticks, wave, "Grass", bossWaveId);
     }
 
     [PunRPC]
-    void StartNewWaveRPC(int seed, int activeWave, string biome)
+    void StartNewWaveRPC(int seed, int activeWave, string biome, int bossWaveId)
     {
         // Start Wave
         // Change Wave
@@ -149,6 +187,14 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
         lastSeed = seed;
         lastBiome = biome;
+
+        // Check if Boss Wave
+        wavesSinceLastBoss++;
+        if(bossWaveId > -1)
+        {
+            zombieRemain = 0;
+            bossToSpawn = bossWaveId;
+        }
 
         // Change vars
         GetComponent<BuildingController>().buildMat += 5;

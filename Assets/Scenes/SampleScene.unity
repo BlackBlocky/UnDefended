@@ -21939,6 +21939,8 @@ MonoBehaviour:
   - SpeedZombie
   - TankZombie
   - JumpZombie
+  bossNames:
+  - HeadBoss
   grassLandscape:
   - Tree1
   - Tree1
@@ -21957,10 +21959,14 @@ MonoBehaviour:
   - 30
   - -21
   wave: 0
+  minWaveToBoss: 5
+  maxWaveToBoss: 8
+  wavesSinceLastBoss: 0
   zombieSpawnSpeed: 1.6
   zombieRemainTotal: 15
   zombieRemain: 0
-  canSpawn: 0
+  bossToSpawn: -1
+  canSpawn: 1
 --- !u!114 &978991889
 MonoBehaviour:
   m_ObjectHideFlags: 0
