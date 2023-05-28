@@ -12,7 +12,7 @@ public class HeadBossMovement : MonoBehaviour
     public float shrinkSize = 0.7f;
     public float shrinkSpeed = 2f;
     
-    public enum State { Idle = 0, Big = 1, Split = 2}
+    public enum State { Idle = 0, Big = 1, Split = 2, SplitAlone = 3}
     [Header("States")]
     public State state = State.Big;
 
@@ -42,6 +42,8 @@ public class HeadBossMovement : MonoBehaviour
         if(activeTarget == null) FindNewTarget();
 
         if(state != State.Idle && !powerUpManager.isFreeze) FixedMovementUpdate();
+
+        baseCollideCooldown = Mathf.Clamp(baseCollideCooldown -= Time.fixedDeltaTime, 0, Mathf.Infinity);
     }
 
     private void Update()
@@ -135,9 +137,9 @@ public class HeadBossMovement : MonoBehaviour
 
             // Only run this, if no building was found
             // Then attack the Base
-            activeTarget = GameObject.FindGameObjectWithTag("Player").transform;
+            activeTarget = GameObject.FindGameObjectWithTag("Base").transform;
         }
-        else if (state == State.Split)
+        else if (state == State.Split || state == State.SplitAlone)
         {
             // Check if the other Splited is alive
             GameObject[] allSplits = GameObject.FindGameObjectsWithTag("Boss");
@@ -152,10 +154,12 @@ public class HeadBossMovement : MonoBehaviour
             }
 
             // Only Run this, if no other Split was found
-            activeTarget = GameObject.FindGameObjectWithTag("Player").transform;
+            activeTarget = GameObject.FindGameObjectWithTag("Base").transform;
+            state = State.SplitAlone;
         }
     }
 
+    float baseCollideCooldown = 0f;
     private void OnCollisionEnter(Collision collision)
     {
         // If Boss Collided to the Ground
@@ -171,7 +175,7 @@ public class HeadBossMovement : MonoBehaviour
 
         // Check if Boss collided with the Base
         // If this happend, add up force to for unstucking
-        else if(collision.collider.gameObject.CompareTag("Base"))
+        else if(collision.collider.gameObject.CompareTag("Base") && state == State.Split)
         {
             rb.AddForce(Vector3.up * 1f, ForceMode.VelocityChange);
         }
@@ -203,7 +207,28 @@ public class HeadBossMovement : MonoBehaviour
         else if (collision.collider.gameObject.CompareTag("Building"))
         {
             rb.AddForce(transform.forward * -3 + transform.up * 2, ForceMode.VelocityChange);
-            print("lol");
+        }
+
+        // Check if the Boss is Big and Collider with the Base
+        // If this happens, add knockback and dmage to the base
+        else if (collision.collider.gameObject.CompareTag("Base") && state == State.Big && baseCollideCooldown == 0f)
+        {
+            rb.AddForce(transform.forward * -12 + transform.up * 6, ForceMode.VelocityChange);
+            if(PhotonNetwork.IsMasterClient)
+            {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<BaseManager>().AddDamage(40);
+                baseCollideCooldown = 1f;
+            }
+        }
+
+        else if (collision.collider.gameObject.CompareTag("Base") && state == State.SplitAlone && baseCollideCooldown == 0f)
+        {
+            rb.AddForce(transform.forward * -12 + transform.up * 6, ForceMode.VelocityChange);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<BaseManager>().AddDamage(10);
+                baseCollideCooldown = 1f;
+            }
         }
     }
 

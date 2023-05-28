@@ -39,6 +39,7 @@ public class WaveSystem : MonoBehaviourPunCallbacks
     public int zombieRemainTotal = 20;
     public int zombieRemain = 0;
     public int bossToSpawn = -1;
+    bool bossSpawnedInThisWave = false;
     public bool canSpawn = true;
 
     bool generateDone = false;
@@ -85,6 +86,22 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
             StartNewWave();
         }
+        else if (PhotonNetwork.IsMasterClient && Input.GetKeyDown(KeyCode.P))
+        {
+            GameObject[] allZombies = GameObject.FindGameObjectsWithTag("Zombie");
+            GameObject[] allBosses = GameObject.FindGameObjectsWithTag("Boss");
+            foreach (GameObject item in allZombies)
+            {
+                ZombieManager.Instance.DestroyZombie(item.GetComponent<ZombieHealth>().id);
+            }
+            foreach (GameObject item in allBosses)
+            {
+                BossManager.Instance.DestroyBoss(item.GetComponent<ZombieHealth>().id, 0);
+            }
+
+            wavesSinceLastBoss = maxWaveToBoss;
+            StartNewWave();
+        }
 
         // Zombie Spawn
         spawnCooldown -= Time.deltaTime;
@@ -121,6 +138,7 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
             bossToSpawn = -1;
             wavesSinceLastBoss = 0;
+            bossSpawnedInThisWave = true;
             GameObject.Find("BossMusic").GetComponent<SoundPlayer>().FadeInAndStartLoop(0, 10f);
         }
     }
@@ -210,6 +228,12 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
         generateDone = false;
         if(PhotonNetwork.IsMasterClient) StartCoroutine(BuildIEnum(seed, biome));
+
+        // Check if last Wave was a Boss Wave
+        if(bossSpawnedInThisWave)
+        {
+            GameObject.Find("BossMusic").GetComponent<SoundPlayer>().FadeOutAndStopLoop(0, 3f);
+        }
     }
 
     IEnumerator WaitForSpawnNext(int seed, string biome)
