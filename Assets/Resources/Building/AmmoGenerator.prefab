@@ -146,6 +146,9 @@ MonoBehaviour:
   source: {fileID: 3605563626134273879}
   clips:
   - {fileID: 8300000, guid: 53e0c49d21582c5449389850426a502f, type: 3}
+  soundPitch: 1
+  SoundType: sound
+  canPlay: 1
 --- !u!1 &2722119183204743104
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +295,9 @@ MonoBehaviour:
   source: {fileID: 971480194675907983}
   clips:
   - {fileID: 8300000, guid: 2e66837f8988ff8499ae637bbc7ec7b7, type: 3}
+  soundPitch: 1
+  SoundType: sound
+  canPlay: 1
 --- !u!1 &5296025602287540296
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +444,9 @@ MonoBehaviour:
   source: {fileID: 2793000308936576307}
   clips:
   - {fileID: 8300000, guid: 0f7c688e942c78b479dcb090d746b4f5, type: 3}
+  soundPitch: 1
+  SoundType: sound
+  canPlay: 1
 --- !u!1 &7002933593422073131
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +983,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &962874940
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -991,4 +1000,5 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

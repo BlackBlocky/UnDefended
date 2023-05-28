@@ -72,6 +72,9 @@ public class HeadBossMovement : MonoBehaviour
                 Vector3 diff = activeTarget.position - transform.position;
                 diff.y = 0;
                 transform.rotation = Quaternion.LookRotation(diff);
+
+                // Refreh Target
+                FindNewTarget();
             }
         }
         else // Boss is Flying
@@ -110,6 +113,28 @@ public class HeadBossMovement : MonoBehaviour
     {
         if(state == State.Big)
         {
+            // Go to the nearest Building
+            GameObject[] allBuildings = GameObject.FindGameObjectsWithTag("Building");
+            float closest = Mathf.Infinity;
+            GameObject closestGo = null;
+
+            foreach (GameObject item in allBuildings)
+            {
+                float distance = Vector3.Distance(transform.position, item.transform.position);
+                if(distance < closest)
+                {
+                    closest = distance;
+                    closestGo = item;
+                }
+            }
+            if(closestGo != null)
+            {
+                activeTarget = closestGo.transform;
+                return;
+            }
+
+            // Only run this, if no building was found
+            // Then attack the Base
             activeTarget = GameObject.FindGameObjectWithTag("Player").transform;
         }
         else if (state == State.Split)
@@ -146,14 +171,14 @@ public class HeadBossMovement : MonoBehaviour
 
         // Check if Boss collided with the Base
         // If this happend, add up force to for unstucking
-        if(collision.collider.gameObject.CompareTag("Base"))
+        else if(collision.collider.gameObject.CompareTag("Base"))
         {
             rb.AddForce(Vector3.up * 1f, ForceMode.VelocityChange);
         }
 
         // Check if Splitted Boss Collided with his Clone
         // If this happens, combine these 2 together
-        if (collision.collider.gameObject.CompareTag("Boss"))
+        else if (collision.collider.gameObject.CompareTag("Boss"))
         {
             if(state == State.Split && PhotonNetwork.IsMasterClient)
             {
@@ -171,6 +196,14 @@ public class HeadBossMovement : MonoBehaviour
                 BossManager.Instance.DestroyBoss(collision.gameObject.GetComponent<ZombieHealth>().id,
                     collision.gameObject.GetComponent<ZombieHealth>().bossDeadAction);
             }
+        }
+
+        // Check if Boss Collide with a Building
+        // If that Happens, give the Boss nockback
+        else if (collision.collider.gameObject.CompareTag("Building"))
+        {
+            rb.AddForce(transform.forward * -3 + transform.up * 2, ForceMode.VelocityChange);
+            print("lol");
         }
     }
 

@@ -121,6 +121,7 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
             bossToSpawn = -1;
             wavesSinceLastBoss = 0;
+            GameObject.Find("BossMusic").GetComponent<SoundPlayer>().FadeInAndStartLoop(0, 10f);
         }
     }
 

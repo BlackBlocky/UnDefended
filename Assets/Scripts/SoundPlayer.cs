@@ -82,6 +82,56 @@ public class SoundPlayer : MonoBehaviour
         Destroy(gameObject, clips[clip].length);
     }
 
+
+    public void FadeInAndStartLoop(int clip, float fadeTimeSec)
+    {
+        source.clip = clips[clip];
+        playing = true;
+
+        float oldVolume = source.volume;
+        source.volume = 0;
+        StartCoroutine(FadeProcessor(oldVolume, true, 1 / fadeTimeSec));
+    }
+    public void FadeOutAndStopLoop(int clip, float fadeTimeSec)
+    {
+        source.clip = clips[clip];
+
+        StartCoroutine(FadeProcessor(source.volume, false, 1 / fadeTimeSec));
+    }
+    IEnumerator FadeProcessor(float originalVolume, bool isGoUp, float stepPerFrame)
+    {
+        // Change Volume
+        if(isGoUp)
+        {
+            source.volume += stepPerFrame * Time.deltaTime;
+        }
+        else
+        {
+            source.volume -= stepPerFrame * Time.deltaTime;
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        // Check if goal is reached
+        if(isGoUp && source.volume < originalVolume)
+        {
+            StartCoroutine(FadeProcessor(originalVolume, isGoUp, stepPerFrame));
+        }
+        else if(!isGoUp && source.volume > 0)
+        {
+            StartCoroutine(FadeProcessor(originalVolume, isGoUp, stepPerFrame));
+        }
+        else
+        {
+            source.volume = originalVolume;
+            if (!isGoUp)
+            {
+                playing = false;
+                Stop();
+            }
+        }
+    }
+
     // Stop
     public void Stop()
     {

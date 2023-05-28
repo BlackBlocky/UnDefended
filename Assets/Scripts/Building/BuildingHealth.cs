@@ -12,20 +12,24 @@ public class BuildingHealth : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             if (collision.gameObject.tag == "Zombie")
             {
-                GetComponent<PhotonView>().RPC("AddDamageToBuilding", RpcTarget.All, 20f, collision.gameObject.GetComponent<ZombieHealth>().id);
+                GetComponent<PhotonView>().RPC("AddDamageToBuilding", RpcTarget.All, 20f, collision.gameObject.GetComponent<ZombieHealth>().id, false);
             }
-        }       
+            else if (collision.gameObject.CompareTag("Boss"))
+            {
+                GetComponent<PhotonView>().RPC("AddDamageToBuilding", RpcTarget.All, 100f, 0, true);
+            }
+        }
     }
 
     [PunRPC]
-    void AddDamageToBuilding(float buildingDamage, int zombieID)
+    void AddDamageToBuilding(float buildingDamage, int zombieID, bool isBoss)
     {
         // Destroy Zombie
-        ZombieManager.Instance.DestroyZombie(zombieID);
+        if(!isBoss) ZombieManager.Instance.DestroyZombie(zombieID);
 
         // Remove Health
         health -= buildingDamage;

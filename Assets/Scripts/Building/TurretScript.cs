@@ -1,9 +1,7 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class TurretScript : MonoBehaviour
 {
@@ -207,6 +205,7 @@ public class TurretScript : MonoBehaviour
     GameObject FindNewTarget()
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Zombie");
+        targets = targets.Concat(GameObject.FindGameObjectsWithTag("Boss")).ToArray(); // Add the Bosses to the array
 
         float shortDis = Mathf.Infinity;
         GameObject shortTarget = null;
