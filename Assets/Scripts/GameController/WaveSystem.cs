@@ -19,16 +19,16 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
     public string[] grassLandscape;
     [Tooltip("" +
-        "0 = Min ls Count; " +
-        "1 = Max ls Count; " +
-        "2 = Offset x; " +
-        "3 = Offset y; " +
-        "4 = Offset z; " +
-        "5 = ls Distance; " +
-        "6 = base Distance; " +
-        "7 = Max Spawn x; " +
-        "8 = Min Spawn x; " +
-        "9 = Max Spawn y; " +
+        "0 = Min ls Count; \n" +
+        "1 = Max ls Count; \n" +
+        "2 = Offset x; \n" +
+        "3 = Offset y; \n" +
+        "4 = Offset z; \n" +
+        "5 = ls Distance; \n" +
+        "6 = base Distance; \n" +
+        "7 = Max Spawn x; \n" +
+        "8 = Min Spawn x; \n" +
+        "9 = Max Spawn y; \n" +
         "10 = Min Spawn y; ")]
     public float[] grassSettings;
 
@@ -57,7 +57,7 @@ public class WaveSystem : MonoBehaviourPunCallbacks
     }
     IEnumerator NewPlayerMapGen(Player newPlayer)
     {
-        myPhotonView.RPC("StartNewWaveRPC", newPlayer, lastSeed, wave - 1, lastBiome);
+        myPhotonView.RPC("StartNewWaveRPC", newPlayer, lastSeed, wave - 1, lastBiome, -1);
         yield return new WaitForSecondsRealtime(1f);
         myPhotonView.RPC("GenerateMap", newPlayer, newMapList.ToArray());
     }
@@ -145,6 +145,8 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
     IEnumerator ZombieAliveCheck()
     {
+        yield return new WaitForSeconds(5f);
+
         while (true)
         {
             if (PhotonNetwork.IsMasterClient)

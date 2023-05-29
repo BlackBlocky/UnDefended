@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 
@@ -60,6 +61,15 @@ public class BaseManager : MonoBehaviourPunCallbacks
         health += amount;
 
         // Effects
+        HealthEffects();
+
+        // Start The Effect on other Clients
+        myPhotonView.RPC("AddHealthOthers", RpcTarget.Others, health);
+    }
+    [PunRPC]
+    void AddHealthOthers(float newHealth)
+    {
+        health = newHealth;
         HealthEffects();
     }
 

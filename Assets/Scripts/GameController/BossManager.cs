@@ -41,14 +41,14 @@ public class BossManager : MonoBehaviourPunCallbacks, IPunObservable
             // Spawn Every Zombie in List
             for (int i = 0; i < activeBosses.Count; i++)
             {
-                myPhotonView.RPC("AddZombieToListRPC", newPlayer, activeBosses[i].GetComponent<ZombieHealth>().resourcesName,
+                myPhotonView.RPC("AddBossToListRPC", newPlayer, activeBosses[i].GetComponent<ZombieHealth>().resourcesName,
                     activeBosses[i].transform.position.x, activeBosses[i].transform.position.y, activeBosses[i].transform.position.z,
                     activeBosses[i].GetComponent<ZombieHealth>().id);
             }
         }
     }
     [PunRPC]
-    void AddZombieToListRPC(string name, float x, float y, float z, int id)
+    void AddBossToListRPC(string name, float x, float y, float z, int id)
     {
         // Do the Spawn RPC but only the Joined player not all clients
         SpawnBossRPC(name, x, y, z, id);
