@@ -103,7 +103,7 @@ public class PlayerAxeUse : MonoBehaviour
         else if(result == "Dead")
         {            
             // Destrucible Destroyed
-            gameController.GetComponent<BuildingController>().buildMat += go.GetComponent<DestructibleScript>().materials;
+            gameController.GetComponent<BuildingController>().AddBuildingCoins(go.GetComponent<DestructibleScript>().materials);
             DestructibleDestroyer.Instance.DestroyDestructible(go.GetComponent<DestructibleScript>().Id);
         }
     }

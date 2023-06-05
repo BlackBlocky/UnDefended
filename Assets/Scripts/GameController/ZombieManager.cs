@@ -149,6 +149,12 @@ public class ZombieManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (item.GetComponent<ZombieHealth>().id == id)
             {
+                // Spawn Pars
+                GameObject s = Instantiate(Resources.Load<GameObject>("ZombieDeathPar"));
+                s.transform.position = item.transform.position;
+                //s.transform.rotation = item.transform.rotation;
+
+                // Destroy the Zombie
                 activeZombies.Remove(item);
                 Destroy(item);
                 return;

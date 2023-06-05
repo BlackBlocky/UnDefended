@@ -7,12 +7,10 @@ TODO: Die nächste wave soll erst starten, wenn alle die welt generiert haben / D
 
 LATER: Wenn Zombie zu Tief fällt, ihn zerstören
 LATER: BuildMat added Text wenn man Destruible zerstört
-LATER: Der Marster Client soll die map in eine liste generaten und dann weiterschicken
 LATER: Destroy Particel bei Buildings
-LATER: Zombie Dead Particle
 LATER: PowerUp übern kopf syncen
 LATER: Player Ammo auf rücken sysncen wenn jemand neues reinjoint für den dann so
-LATER: Dummy Puppe
+LATER: Dummy Puppe die den boss ablenkt
 
 CHANGE: Schießen soll leichter gehen, also den trigger weniger nach unten (bei bauen evlt. auch)
 CHANGE: Zomibe rb vel soll begrenzt sein (damit sie nicht so komisch sliden)

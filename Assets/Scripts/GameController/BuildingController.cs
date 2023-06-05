@@ -177,6 +177,38 @@ public class BuildingController : MonoBehaviour
         hasBuild = false;
     }
 
+    public void AddBuildingCoins(int amount)
+    {
+        // Add Building Coins and Show a added Text above the Player
+        buildMat += amount;
+
+        GameObject addedTxt = GetComponent<QuickLogin>().MYPLAYER.transform.Find("AddedTxt").gameObject;
+        GameObject s = Instantiate(addedTxt);
+        s.transform.parent = null;
+        s.transform.position = addedTxt.transform.position;
+        s.transform.LookAt(Camera.main.transform);
+        s.transform.Rotate(-180, 0, -180);
+        s.GetComponent<TextMeshPro>().text = "+" + amount.ToString("0") + " [" + buildMat + "]";
+        s.GetComponent<MeshRenderer>().enabled = true;
+        
+        StartCoroutine(MoveAddedTextLoop(s, 2f, 0));
+    }
+
+    IEnumerator MoveAddedTextLoop(GameObject addedText, float speed, float moveProgress)
+    {
+        if (moveProgress < 1f)
+        {
+            yield return new WaitForEndOfFrame();
+            moveProgress += Time.deltaTime;
+            addedText.transform.position += Vector3.up * speed * Time.deltaTime;
+            StartCoroutine(MoveAddedTextLoop(addedText, speed, moveProgress));
+        }
+        else
+        {
+            Destroy(addedText);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
