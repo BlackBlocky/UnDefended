@@ -35,11 +35,15 @@ public class WaveSystem : MonoBehaviourPunCallbacks
     public int wave = 0;
     public int minWaveToBoss = 5, maxWaveToBoss = 8, wavesSinceLastBoss = 0;
 
+    // Zombie Settings
     public float zombieSpawnSpeed = 2f;
     public int zombieRemainTotal = 20;
     public int zombieRemain = 0;
+
+    // Boss
     public int bossToSpawn = -1;
     bool bossSpawnedInThisWave = false;
+
     public bool canSpawn = true;
 
     bool generateDone = false;

@@ -2,11 +2,7 @@ IDEA: time power up
 
 TODO: LEVEL
 TODO: KITS
-TODO: Die nächste wave soll erst starten, wenn alle die welt generiert haben / Der Marster Client soll die welt machen und dann
-      sollen den anderen spielern diese map zugeschickt bekommen.
 
-LATER: Wenn Zombie zu Tief fällt, ihn zerstören
-LATER: BuildMat added Text wenn man Destruible zerstört
 LATER: Destroy Particel bei Buildings
 LATER: PowerUp übern kopf syncen
 LATER: Player Ammo auf rücken sysncen wenn jemand neues reinjoint für den dann so
@@ -23,7 +19,9 @@ FIX: Zombie leben lassen meta fixen
 BUG: Bei höheren Speed braucht mehr mehr Ammo beim Turret und andersrum
 BUG: freeze double bar
 BUG: turret out of ammo sound bei allen abspielen
-BUG: Erster Axt Hit gibt ne Fehlermeldung
+BUG: Erster Axt Hit gibt ne Fehlermeldung - nicht mehr?
+
+LATER: Wenn jemand reinjoint, soll er die aktuellen Zombie/BossWaveSettings bekommen per RPC
 
 IDEA: Bei besseren basen sollen turrets sein, die man bedienen kann,
 dann eine weile cooldown haben, und damm mit der Zeit neue schüsse bekommen

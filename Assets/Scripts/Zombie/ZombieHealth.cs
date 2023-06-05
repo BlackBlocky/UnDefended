@@ -16,6 +16,15 @@ public class ZombieHealth : MonoBehaviour
 
     public SoundPlayer damageSound;
 
+    private void FixedUpdate()
+    {
+        if(PhotonNetwork.IsMasterClient && transform.position.y <= -20f)
+        {
+            // Check if Zombie is Below the Map, if this is the Case, Destroy the Zombie
+            ZombieManager.Instance.DestroyZombie(id);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Check if bullet and bullet owner
