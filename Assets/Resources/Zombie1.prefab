@@ -146,6 +146,9 @@ MonoBehaviour:
   source: {fileID: 2452216258851564870}
   clips:
   - {fileID: 8300000, guid: ebcfd6be6b79b784995b8bf79f1b53f7, type: 3}
+  soundPitch: 1
+  SoundType: sound
+  canPlay: 1
 --- !u!1 &8608481111659187201
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +262,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   resourcesName: 
-  health: 100
+  isBoss: 0
+  bossDeadAction: 0
+  health: 30
+  isDead: 0
   damageable: 1
   damageSound: {fileID: 5928448022012179223}
 --- !u!54 &8608481112675111242
@@ -1202,7 +1208,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8608481111515305188
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1219,7 +1225,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8608481111515305186
 MonoBehaviour:
   m_ObjectHideFlags: 0

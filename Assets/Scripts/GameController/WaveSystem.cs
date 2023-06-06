@@ -37,8 +37,10 @@ public class WaveSystem : MonoBehaviourPunCallbacks
 
     // Zombie Settings
     public float zombieSpawnSpeed = 2f;
+    public float zombieSpawnTime = 10f;
     public int zombieRemainTotal = 20;
     public int zombieRemain = 0;
+    public int zombieHpAdd = 0;
 
     // Boss
     public int bossToSpawn = -1;
@@ -206,9 +208,12 @@ public class WaveSystem : MonoBehaviourPunCallbacks
         wave++;
 
         // Change Spawn Settings
-        zombieRemainTotal += 10;
+        int waveX = wave - 1;
+        zombieRemainTotal = 25 + 9 * waveX;
         zombieRemain = zombieRemainTotal;
-        zombieSpawnSpeed = 40f / zombieRemainTotal;
+        zombieSpawnTime = 20f + 1.5f * (float)waveX;
+        zombieSpawnSpeed = zombieSpawnTime / zombieRemainTotal;
+        zombieHpAdd = (int)(4.0f * Mathf.Log(waveX + 1.0f, 1.4f));
 
         lastSeed = seed;
         lastBiome = biome;

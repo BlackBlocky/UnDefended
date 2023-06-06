@@ -113,7 +113,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   resourcesName: 
-  health: 60
+  isBoss: 0
+  bossDeadAction: 0
+  health: 18
+  isDead: 0
   damageable: 1
   damageSound: {fileID: 5928448022012179223, guid: cc90575c9ed6cff41afb42e7149dce5f,
     type: 3}
@@ -950,7 +953,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &5101209347158056225
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -967,7 +970,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5101209347158056230
 MonoBehaviour:
   m_ObjectHideFlags: 0

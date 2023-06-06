@@ -21,7 +21,7 @@ BUG: freeze double bar
 BUG: turret out of ammo sound bei allen abspielen
 BUG: Erster Axt Hit gibt ne Fehlermeldung - nicht mehr?
 
-LATER: Wenn jemand reinjoint, soll er die aktuellen Zombie/BossWaveSettings bekommen per RPC
+LATER: 
 
 IDEA: Bei besseren basen sollen turrets sein, die man bedienen kann,
 dann eine weile cooldown haben, und damm mit der Zeit neue schüsse bekommen

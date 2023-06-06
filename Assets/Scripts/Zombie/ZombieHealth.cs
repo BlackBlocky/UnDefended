@@ -16,6 +16,11 @@ public class ZombieHealth : MonoBehaviour
 
     public SoundPlayer damageSound;
 
+    private void Start()
+    {
+        health += GameObject.FindGameObjectWithTag("GameController").GetComponent<WaveSystem>().zombieHpAdd;
+    }
+
     private void FixedUpdate()
     {
         if(PhotonNetwork.IsMasterClient && transform.position.y <= -20f)
