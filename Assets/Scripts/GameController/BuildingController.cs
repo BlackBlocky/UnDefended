@@ -27,11 +27,18 @@ public class BuildingController : MonoBehaviour
     public MeshRenderer[] myRenderer;
     public string[] blueprintName;
     public int[] blueprintCost;
+    public int[] blueprintCostAdd;
+    int[] blueprintCostProgress;
 
     public bool isBuilding;
     public bool hasBuild = false;
 
     int activeBp = 1;
+
+    private void Start()
+    {
+        blueprintCostProgress = new int[blueprintCostAdd.Length];
+    }
 
     void Update()
     {
@@ -64,7 +71,7 @@ public class BuildingController : MonoBehaviour
         buildPoint.position = newPos;
 
         // Update CostTxt
-        costTxt.text = $"{blueprintCost[activeBp].ToString("0")}\n[{buildMat.ToString("0")}]";
+        costTxt.text = $"{(blueprintCost[activeBp] + blueprintCostProgress[activeBp]).ToString("0")}\n[{buildMat.ToString("0")}]";
 
         // Check if Building is possible
         bool buildPossible = true;
@@ -75,7 +82,7 @@ public class BuildingController : MonoBehaviour
 
             ChangeBuildPointMat(2);
         }
-        else if(buildMat < blueprintCost[activeBp])
+        else if(buildMat < blueprintCost[activeBp] + blueprintCostProgress[activeBp])
         {
             buildPossible = false;
 
@@ -97,11 +104,12 @@ public class BuildingController : MonoBehaviour
         }
 
         // Build Building
-        if(Input.GetButtonDown("Fire1") && buildPossible && !alreadyBuild ||
+        if (Input.GetButtonDown("Fire1") && buildPossible && !alreadyBuild ||
             Input.GetAxisRaw("Fire1") == 1 && buildPossible && !alreadyBuild)
         {
             // Remove BuildMat
-            buildMat -= blueprintCost[activeBp];
+            buildMat -= blueprintCost[activeBp] + blueprintCostProgress[activeBp];
+            blueprintCostProgress[activeBp] += blueprintCostAdd[activeBp];
 
             // Build
             alreadyBuild = true;

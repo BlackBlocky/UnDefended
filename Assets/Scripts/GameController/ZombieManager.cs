@@ -177,6 +177,13 @@ public class ZombieManager : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
+        // Error Zombie Not found
+        if(go == null)
+        {
+            Debug.LogWarning("Tried to add " + damage + " damage to Zombie with ID [" + id + "], but Zombie wasnt found!");
+            return;
+        }
+
         // Add Damage
         go.GetComponent<ZombieHealth>().AddDamage(damage);
         if(go.GetComponent<ZombieHealth>().health <= 0)

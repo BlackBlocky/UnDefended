@@ -22021,6 +22021,7 @@ MonoBehaviour:
   - Turret
   - AmmoGenerator
   blueprintCost: 00000000280000001e000000
+  blueprintCostAdd: 000000000400000001000000
   isBuilding: 0
   hasBuild: 0
 --- !u!114 &978991885
@@ -22112,8 +22113,10 @@ MonoBehaviour:
   maxWaveToBoss: 8
   wavesSinceLastBoss: 0
   zombieSpawnSpeed: 1.6
+  zombieSpawnTime: 10
   zombieRemainTotal: 15
   zombieRemain: 0
+  zombieHpAdd: 0
   bossToSpawn: -1
   canSpawn: 1
 --- !u!114 &978991889
