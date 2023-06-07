@@ -3,6 +3,9 @@ IDEA: time power up
 TODO: LEVEL
 TODO: KITS
 
+TODO: Menu machen, wo man als Spieler rumläuft und auf die "Zombies" schießt, was man machen will
+TODO: Settings Menu (Audio, Full/Window Screen, Better aim Dot, Show FPS, Grafics)
+
 LATER: Destroy Particel bei Buildings
 LATER: PowerUp übern kopf syncen
 LATER: Player Ammo auf rücken sysncen wenn jemand neues reinjoint für den dann so
@@ -23,8 +26,14 @@ BUG: Erster Axt Hit gibt ne Fehlermeldung - nicht mehr?
 
 LATER: BOMB RADIUS ITS TOO MUCH
 LATER: TURRETS AMMO UNSERIÖÖS
-LATER: Flame thrower fixen
 LATER: Wenn Player Joint, alle bereits zerstörten bäume syncen
+LATER: Aim Dot immer über alles machen
 
 IDEA: Bei besseren basen sollen turrets sein, die man bedienen kann,
 dann eine weile cooldown haben, und damm mit der Zeit neue schüsse bekommen
+
+BUILDING: Time Controller
+BUILDING: Barbed Wire (Stacheldrat)
+
+POWERUP: TurretsCooler
+POWERUP: Rocket (Select a Location, then click to launch the rocket to explode to the ground)

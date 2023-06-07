@@ -1,9 +1,11 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerFlameThrower : MonoBehaviour
 {  
     public bool canShoot = false;
+    public float particlePerSecond = 132.8f;
 
     [Header("Linked Compoments")]
     [SerializeField] PlayerShoot playerShoot;
@@ -21,6 +23,13 @@ public class PlayerFlameThrower : MonoBehaviour
     private float maxFuel = 8f;
     private float fuel = 0f;
 
+
+    private void Start()
+    {
+        StartCoroutine(ParticleShootLoop());
+        ParticleSystem.EmissionModule em = shootPar.emission;
+        em.enabled = false;
+    }
 
     private void Awake()
     {
@@ -57,7 +66,11 @@ public class PlayerFlameThrower : MonoBehaviour
     void ShootUpdate()
     {
         // Start Flamethrower
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButtonDown("Fire1"))
+        {
+            photonView.RPC("StartUseFlamethrowerRPC", RpcTarget.All);
+        }
+        else if(Input.GetButton("Fire1"))
         {
             photonView.RPC("UseFlamethrowerRPC", RpcTarget.All);
         }
@@ -79,10 +92,18 @@ public class PlayerFlameThrower : MonoBehaviour
     }
 
     [PunRPC]
+    void StartUseFlamethrowerRPC()
+    {
+        lastParSpawnTime = Time.time;
+    }
+
+    [PunRPC]
     void UseFlamethrowerRPC()
     {
         // Start Flame Thrower
-        if (!shootPar.isPlaying) shootPar.Play();
+        if (!shootPar.isPlaying) {
+            shootPar.Play(true);
+        }
         fuel -= Time.deltaTime;
 
         // Effects
@@ -94,7 +115,7 @@ public class PlayerFlameThrower : MonoBehaviour
     [PunRPC]
     void StopUseFlamethrowerRPC()
     {
-        shootPar.Stop();
+        shootPar.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         shootingSound.Stop();
         shootingSound.playing = false;      
     }
@@ -105,5 +126,29 @@ public class PlayerFlameThrower : MonoBehaviour
         // Finally End the Flamethrower for all Players
         weaponHand.SwitchWeapon(1);
         weaponHand.activePrimary = 1;
+    }
+
+    float lastParSpawnTime = 0;
+    float particlesToSpawn = 0;
+    IEnumerator ParticleShootLoop()
+    {
+        yield return new WaitForSeconds(1 / particlePerSecond);
+
+        if(shootingSound.playing)
+        {
+            particlesToSpawn += (Time.time - lastParSpawnTime) / (1 / particlePerSecond);
+
+            if (particlesToSpawn >= 1)
+            {
+                int particlesToSpawnInt = (int)System.Math.Truncate((decimal)particlesToSpawn);
+                shootPar.Emit(particlesToSpawnInt);
+
+                particlesToSpawn -= particlesToSpawnInt;
+            }
+        }      
+    
+        lastParSpawnTime = Time.time;
+
+        StartCoroutine(ParticleShootLoop());
     }
 }

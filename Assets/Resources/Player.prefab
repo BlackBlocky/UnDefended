@@ -5909,6 +5909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canShoot: 1
+  particlePerSecond: 132.8
   playerShoot: {fileID: 6688436738398766843}
   photonView: {fileID: 6688436738398766841}
   shootingSound: {fileID: 4816618560031145838}

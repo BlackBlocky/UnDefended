@@ -5,6 +5,7 @@ using Photon.Pun;
 public class PowerUpManager : MonoBehaviour
 {
     public GameObject myPlayer;
+    [Tooltip("0= null\n" + "1= ammo\n" + "2= heal\n" + "3= freeze\n" + "4= bomb\n" + "5= flamethrower\n")]
     public int[] itemList;
     public Mesh[] itemMeshes;
 
