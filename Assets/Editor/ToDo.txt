@@ -3,8 +3,10 @@ IDEA: time power up
 TODO: LEVEL
 TODO: KITS
 
+TODO: Man soll von Zombies weggeschubst werden
+
 TODO: Menu machen, wo man als Spieler rumläuft und auf die "Zombies" schießt, was man machen will
-TODO: Settings Menu (Audio, Full/Window Screen, Better aim Dot, Show FPS, Grafics)
+TODO: Settings Menu (Audio, Full/Window Screen, Better aim Dot, Show FPS, Grafics, Camera Shake)
 
 LATER: Destroy Particel bei Buildings
 LATER: PowerUp übern kopf syncen
@@ -19,13 +21,11 @@ FIX: Bei der world gen sollen keine sachen im player spawnen
 FIX: Man kann schießen während man einen baum abbaut
 FIX: Zombie leben lassen meta fixen
 
-BUG: Bei höheren Speed braucht mehr mehr Ammo beim Turret und andersrum
 BUG: freeze double bar
 BUG: turret out of ammo sound bei allen abspielen
 BUG: Erster Axt Hit gibt ne Fehlermeldung - nicht mehr?
 
 LATER: BOMB RADIUS ITS TOO MUCH
-LATER: TURRETS AMMO UNSERIÖÖS
 LATER: Wenn Player Joint, alle bereits zerstörten bäume syncen
 LATER: Aim Dot immer über alles machen
 

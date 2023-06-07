@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canLook = true;
 
     public GameObject aimDot;
+    public LayerMask aimDotColliderLayers;
 
     public Animator anim;
 
@@ -100,12 +102,25 @@ public class PlayerMovement : MonoBehaviour
 
             aimDot.transform.Translate(moveDire * 25 * sensi * Time.unscaledDeltaTime);
         }
-        
+
+        // Fix aimdot Pos by making it on top of everything
+        //RaycastHit hit;
+        //Physics.Raycast(aimDot.transform.position + Vector3.up * 100, Vector3.down, out hit, Mathf.Infinity, aimDotColliderLayers, QueryTriggerInteraction.Ignore);
+        //aimDot.transform.position = hit.point;
 
         // Finally Look to Mouse
         Vector3 diff = aimDot.transform.position - transform.position;
         diff.y = 0;
         var rotation = Quaternion.LookRotation(diff);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * smoothLook);
+    }
+
+    private void OnDrawGizmos()
+    {
+        RaycastHit hit;
+        Physics.Raycast(aimDot.transform.position + Vector3.up * 100, Vector3.down, out hit, Mathf.Infinity, aimDotColliderLayers, QueryTriggerInteraction.Ignore);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(aimDot.transform.position + Vector3.up * 100, hit.point);
     }
 }

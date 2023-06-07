@@ -91,6 +91,7 @@ public class TurretScript : MonoBehaviour
     }
 
     int lastAmmoInt = 0;
+    float activeAmmoAddCooldown = 0;
     void AmmoAddUpdate()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ammoAddRange);
@@ -101,27 +102,33 @@ public class TurretScript : MonoBehaviour
             {
                 if (activeOb.GetComponent<PhotonView>().IsMine && activeOb.GetComponent<PlayerShoot>().ammo > 0)
                 {
-                    // Remove Ammo from Player
-                    activeOb.GetComponent<PlayerShoot>().ammo -= ammoAddSpeed * Time.deltaTime;
-                    activeOb.GetComponent<PlayerShoot>().RefreshAmmoTxt();
+                    activeAmmoAddCooldown -= Time.deltaTime;
+                    if(activeAmmoAddCooldown <= 0)
+                    {
+                        activeAmmoAddCooldown = 1 / ammoAddSpeed;
 
-                    // Effects
-                    if (lastAmmoInt != (int)ammo)
-                    {
-                        ammoAddSound.PlaySingle();
-                        lastAmmoInt = (int)ammo;
-                    }
+                        // Remove Ammo from Player
+                        activeOb.GetComponent<PlayerShoot>().ammo -= 1;
+                        activeOb.GetComponent<PlayerShoot>().RefreshAmmoTxt();
 
-                    // Add Ammo at Marster Client
-                    if (PhotonNetwork.IsMasterClient == false)
-                    {
-                        photonView.RPC("AddAmmoRPC", RpcTarget.MasterClient);
-                        return;
-                    }
-                    else
-                    {
-                        AddAmmoRPC();
-                        return;
+                        // Effects
+                        if (lastAmmoInt != (int)ammo)
+                        {
+                            ammoAddSound.PlaySingle();
+                            lastAmmoInt = (int)ammo;
+                        }
+
+                        // Add Ammo at Marster Client
+                        if (PhotonNetwork.IsMasterClient == false)
+                        {
+                            photonView.RPC("AddAmmoRPC", RpcTarget.MasterClient);
+                            return;
+                        }
+                        else
+                        {
+                            AddAmmoRPC();
+                            return;
+                        }
                     }                   
                 }
             }
@@ -132,7 +139,7 @@ public class TurretScript : MonoBehaviour
     void AddAmmoRPC()
     {
         // Add Ammo
-        Mathf.Clamp(ammo += ammoAddSpeed * Time.deltaTime, 0, maxAmmo);
+        ammo = Mathf.Clamp(ammo + 1, 0, maxAmmo);
         photonView.RPC("RecolorAmmoBoxRPC", RpcTarget.All, ammo, maxAmmo);
 
         // Refresh ammo at others

@@ -5766,6 +5766,9 @@ MonoBehaviour:
   canMove: 1
   canLook: 1
   aimDot: {fileID: 0}
+  aimDotColliderLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   anim: {fileID: 6688436736940519286}
 --- !u!114 &6688436738398766843
 MonoBehaviour:
